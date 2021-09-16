@@ -4,14 +4,14 @@
 
 .container-logo {
     float: left; 
-    width: 100px;
+    width: 80px;
 }
 
 
 header > div {
     width: 100%;
     box-sizing: border-box;
-    justify-self: space-around;
+    justify-content: space-between;
 }
 
 .main-navbar {
@@ -25,4 +25,9 @@ header > div {
 ul.navbar-list {
     list-style: none;
     display: flex;
+}
+
+.cart-buttonNav {
+    display: flex;
+    max-height: 40px;
 }
