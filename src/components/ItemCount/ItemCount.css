@@ -1,0 +1,10 @@
+.counter {
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+
+#addToCart {
+    margin-top: 15px;
+    color: black;
+    background-color: beige;
+}

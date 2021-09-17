@@ -1,8 +1,6 @@
 import React from 'react'
-import productImg from '../../assets/products/happier-than-ever.jpg'
-import productImg2 from '../../assets/products/abbey-road.jpg'
 import './Product.css';
-import Button from '@material-ui/core/Button';
+import ItemCount from "../ItemCount/ItemCount";
 
 //Functional Component
 const Product = (props) => {
@@ -14,7 +12,7 @@ const Product = (props) => {
                 </div>
                 <h3>{props.title}</h3>
                 <p>${props.price}</p>
-                <Button variant="contained">Comprar</Button>
+                <ItemCount />
             </div>
         </>
     )
