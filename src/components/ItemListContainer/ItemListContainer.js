@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from "react";
 import Product from '../Product/Product'
 import productImg1 from '../../assets/products/happier-than-ever.jpg'
 import productImg2 from '../../assets/products/abbey-road.jpg'
 import productImg3 from '../../assets/products/queen-2.jpg'
+
 //Functional Component
-const ItemListContainer = () => {
+export default function ItemListContainer() {
+    const [stock, setStock] = useState(0);
+    const agregarStock = () => {
+        setStock(stock + 1)
+    }
     return(
         <div>
             <Product image={productImg1} title="Happier Than Ever" price="3200" />
@@ -16,5 +21,3 @@ const ItemListContainer = () => {
         </div>
     )
 }
-
-export default ItemListContainer
