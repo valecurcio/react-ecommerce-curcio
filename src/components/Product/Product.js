@@ -8,7 +8,7 @@ const Product = (props) => {
         <>
             <div className="container-product">
                 <div>
-                    <img src={props.image} alt=""/>
+                    <img src={`./assets/products/${props.img}`} alt="cover-vinyl"/>
                 </div>
                 <h3>{props.title}</h3>
                 <p>${props.price}</p>

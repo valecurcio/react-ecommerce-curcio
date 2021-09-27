@@ -4,8 +4,14 @@ import './ItemCount.css';
 
 export default function ItemCount() {
     const [item, setItem] = useState(0);
+    const [stock, setStock] = useState(10);
+    const [disableButton, setDisableButton] = useState(false);
     const addItem = () => {
-        setItem(item + 1)
+        if(item < stock){
+            setItem(item + 1)
+        }else{
+            setDisableButton(true);
+        }
     }
     const removeItem = () => {
         if(item > 0){
@@ -21,7 +27,7 @@ export default function ItemCount() {
                 <h3>{item}</h3>
                 <Button onClick={addItem}>+</Button>
             </div>
-            <Button id="addToCart" variant="contained">Agregar al carrito</Button>
+            <Button disabled={disableButton} id="addToCart" variant="contained">Agregar al carrito</Button>
         </>
     )
 }
