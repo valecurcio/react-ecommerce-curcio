@@ -10,10 +10,10 @@ import Button from '@material-ui/core/Button';
 import CartWidget from '../CartWidget/CartWidget';
 //import MenuIcon from '@material-ui/icons/Menu';
 
-const NavBar = () => {
+const NavBar = (props) => {
 
     return (
-            <AppBar position="static" className="main-navbar">
+            <AppBar position={props.fixed ? 'fixed' : 'static'} className={`main-navbar ${props.fixed ? 'navbar-scroll' : ''}`}>
                 <Toolbar>
                     <Typography variant="h6">
                         <div className="container-logo">
