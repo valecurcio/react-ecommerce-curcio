@@ -20,6 +20,10 @@ export default function ItemCount() {
             setItem(0)
         }
     }
+    const addToCart = () => {
+        console.log('agregar al carrito')
+        console.log(item)
+    }
     return(
         <>
             <div className="counter">
@@ -27,7 +31,7 @@ export default function ItemCount() {
                 <h3>{item}</h3>
                 <Button onClick={addItem}>+</Button>
             </div>
-            <Button disabled={disableButton} id="addToCart" variant="contained">Agregar al carrito</Button>
+            <Button disabled={disableButton} onClick={addToCart} id="addToCart" variant="contained">Agregar al carrito</Button>
         </>
     )
 }

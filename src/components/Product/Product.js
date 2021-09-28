@@ -1,7 +1,6 @@
-import React from 'react'
+import React from 'react';
 import './Product.css';
 import ItemCount from "../ItemCount/ItemCount";
-
 //Functional Component
 const Product = (props) => {
     return(
