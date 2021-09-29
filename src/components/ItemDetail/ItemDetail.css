@@ -1,0 +1,32 @@
+.item-detail {
+    padding: 50px;
+    display: flex;
+    text-align: left;
+}
+
+.img-container{
+    flex: 1;
+}
+
+.product-img {
+    height: 80vh;
+}
+
+.info {
+    flex: 1;
+    padding: 0px 50px;
+}
+
+.title {
+    font-weight: 200;
+}
+
+.desc {
+    font-weight: 200;
+    margin: 20px 0px;
+}
+
+.price {
+    font-weight: 200;
+    font-size: 30px;
+}
