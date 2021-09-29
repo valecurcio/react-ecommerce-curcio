@@ -21,7 +21,7 @@ function App() {
     return (
         <div className="App">
             <NavBar fixed={fixedScroll} />
-            <ItemListContainer />
+            {/* <ItemListContainer /> */}
             <ItemDetailContainer />
         </div>
     );

@@ -1,6 +1,6 @@
 .counter {
-    display: inline-flex;
-    justify-content: space-evenly;
+    display: flex;
+    margin-left: 25px;
 }
 
 #addToCart {
