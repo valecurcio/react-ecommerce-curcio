@@ -2,6 +2,7 @@ import React from 'react';
 import './Product.css';
 import ItemCount from "../ItemCount/ItemCount";
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 //Functional Component
 const Product = (props) => {
     return(
@@ -13,7 +14,7 @@ const Product = (props) => {
                 <h3>{props.title}</h3>
                 <p>${props.price}</p>
                 <ItemCount />
-                <Button onClick={console.log('ver detalle')}>Ver</Button>
+                <Button id="show" variant="contained"><Link class="links" to={`/producto/${props.id}`}>Ver</Link></Button>
             </div>
         </>
     )

@@ -1,6 +1,7 @@
 .counter {
+    text-align: center;
     display: flex;
-    margin-left: 25px;
+    align-content: space-between;
 }
 
 #addToCart {
