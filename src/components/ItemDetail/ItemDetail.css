@@ -30,3 +30,15 @@
     font-weight: 200;
     font-size: 30px;
 }
+
+#back {
+    margin-top: 15px;
+    margin-left: 15px;
+    color: black;
+    background-color: beige;
+}
+
+.links{
+    text-decoration: none;
+    color: black;
+}

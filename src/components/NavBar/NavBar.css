@@ -23,11 +23,16 @@ header > div {
 }
 
 ul.navbar-list {
-    list-style: none;
+    text-decoration: none;
     display: flex;
 }
 
 .cart-buttonNav {
     display: flex;
     max-height: 40px;
+}
+
+.links{
+    text-decoration: none;
+    color: black;
 }

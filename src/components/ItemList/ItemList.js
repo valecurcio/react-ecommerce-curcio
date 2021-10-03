@@ -1,62 +1,59 @@
-import React, { useState, useEffect } from "react";
-import Product from '../Product/Product';
+import React, { useState, useEffect } from "react"
+import Product from '../Product/Product'
+import LoadingScreen from '../LoadingScreen/LoadingScreen'
+import { mockProducts } from "../../mockProducts"
+import { NavLink, useParams } from 'react-router-dom'
 
 function ItemList() {
-    const [products, setProduct] = useState([])
-    //const [stock, setStock] = useState(0);
-    //const agregarStock = () => {
-    //    setStock(stock + 1)
-    //}
-    const getProducts = new Promise ((resolve) => {
-        setTimeout(() => {
-
-            const mockProducts = [
-                {
-                    id: '1',
-                    title: 'Happier than Ever',
-                    img: 'happier-than-ever.jpg',
-                    price: '1800',
-                    stock: 100
-                },
-                {
-                    id: '2',
-                    title: 'Abbey Road',
-                    img: 'abbey-road.jpg',
-                    price: '1200',
-                    stock: 120
-                },
-                {
-                    id: '3',
-                    title: 'Queen II',
-                    img: 'queen-2.jpg',
-                    price: '1500',
-                    stock: 130
-                }
-            ]
-            resolve(mockProducts)
-        }, 2000)
-    })
+    const [products, setProduct] = useState([]);
+    const [loader, setLoader] = useState(true);
+    const {categoryId} = useParams();
+    
 
     useEffect(() => {
-        getProducts.then((res) =>{
-            console.log("respuesta: ", res)
-            setProduct(res)
-        } )
-       
-    }, []);
+        setLoader(true);
+        const getProducts = new Promise ((resolve) => {
+            setTimeout(() => {
+                resolve(mockProducts)
+            }, 2000)
+        });
 
-    const renderProducts = products.map((product, index) => {
-        return(
-        <Product key={`item-${product.id}`} img={product.img} title={product.title} price={product.price} />
-    )
-})
+        getProducts.then((res) =>{
+            //uso el categoryId para filtrar los productos
+            categoryId ? setProduct( res.filter( i => i.category === categoryId)) : setProduct(res);
+        } ).finally(() => setLoader(false));
+       
+    }, [categoryId]);
+
+    const categories = [
+        { id: '0', address: '/', text: 'Todos los productos'},
+        { id: 'Rock', address: '/category/Rock', text: 'Rock'},
+        { id: 'Pop', address: '/category/Pop', text: 'Pop'},
+        { id: 'Jazz', address: '/category/Jazz', text: 'Jazz'}
+    ];
+
+//     const renderProducts = products.map((product, index) => {
+//         return(
+//         <Product key={`item-${product.id}`} img={product.img} title={product.title} price={product.price} />
+//     )
+// })
+
+    
 
     return(
         <div className="container-general">
-            {products.length !== 0 ? renderProducts : (
-            //Reemplazar por spinner personalizado para el ecommerce
-            <div>Cargando...</div>)
-            }
+            {categories.map((cat) => {
+        return (
+            <div className="links" key={cat.id}>
+                <NavLink to={cat.address} exact activeClassName="activeClass">
+                </NavLink>
+            </div>
+        )
+        })}
+        {loader ? (<LoadingScreen />) : (products?.map((product) => (
+                <Product {...product} key={product.id} />)
+                // <Product id={product.id} img={product.img} title={product.title} price={product.price} />
+            ))}
         </div>
     )
 }
