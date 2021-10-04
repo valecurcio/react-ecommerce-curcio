@@ -1,8 +1,11 @@
 import React,{useState, useEffect} from 'react'
 import ItemDetail from '../ItemDetail/ItemDetail'
+import LoadingScreen from '../LoadingScreen/LoadingScreen'
+import { mockProducts } from "../../mockProducts"
 
 function ItemDetailContainer() {
     const [infoProduct, setInfoProduct] = useState(null);
+    const [loader, setLoader] = useState(true);
     
     const getProduct = new Promise ((resolve) => {
         setTimeout(() => {
@@ -24,15 +27,16 @@ function ItemDetailContainer() {
 
     
     useEffect(() => {
+        setLoader(true);
         getProduct.then((response) => {
             setInfoProduct(response)
-        })
+        }).finally(() => setLoader(false))
     }, []);
 
     return (
         <div className="detail-container">
-         {infoProduct && <ItemDetail data={infoProduct} />}
-         {console.log("infoProduct: ", infoProduct)} 
+         {loader ? (<LoadingScreen />) : infoProduct && <ItemDetail data={infoProduct} />}
+         {console.log("infoProduct: ", infoProduct)}
         </div>
     );
 }

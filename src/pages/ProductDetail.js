@@ -4,9 +4,10 @@ import ItemDetailContainer from '../components/ItemDetailContainer/ItemDetailCon
 
 export default function ProductDetail() {
     const {productId} = useParams()
+    console.log(productId)
     return (
         <>
-        <p>Id de producto: {productId} </p>
+        {/* <p>Id de producto: {productId} </p> */}
            <ItemDetailContainer /> 
         </>
     )

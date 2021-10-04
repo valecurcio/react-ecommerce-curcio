@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React from 'react'
 import './ItemDetail.css'
 import ItemCount from "../ItemCount/ItemCount";
 import { Button } from '@material-ui/core';
@@ -13,7 +13,7 @@ function ItemDetail(props) {
         <div className="item-detail">
             {console.log("Data desde item detail: ", props.data)}
             <div className="img-container">
-                <img className="product-img" src={`./assets/products/${props.data.img}`} alt="album-cover"/>
+                <img className="product-img" src={`../assets/products/${props.data.img}`} alt="album-cover"/>
             </div> 
             <div className="info">
                 <h1 className="title">{props.data.title}</h1>
@@ -23,7 +23,7 @@ function ItemDetail(props) {
                 <p className="desc">Año: {props.data.year}</p>
                 <p className="price">AR ${props.data.price}</p>
                 <ItemCount />
-                <Button id="back" variant="contained"><Link class="links" to={"/"}>Volver</Link></Button>
+                <Button id="back" variant="contained"><Link className="links" to={"/"}>Volver</Link></Button>
             </div>
         </div>
     )

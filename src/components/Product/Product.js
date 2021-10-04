@@ -9,12 +9,12 @@ const Product = (props) => {
         <>
             <div className="container-product">
                 <div>
-                    <img src={`./assets/products/${props.img}`} alt="cover-vinyl"/>
+                    <img src={`../assets/products/${props.img}`} alt="cover-vinyl"/>
                 </div>
                 <h3>{props.title}</h3>
                 <p>${props.price}</p>
                 <ItemCount />
-                <Button id="show" variant="contained"><Link class="links" to={`/producto/${props.id}`}>Ver</Link></Button>
+                <Button id="show" variant="contained"><Link className="links" to={`/producto/${props.id}`}>Ver</Link></Button>
             </div>
         </>
     )
