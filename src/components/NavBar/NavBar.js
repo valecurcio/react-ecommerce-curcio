@@ -7,9 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-//import IconButton from '@material-ui/core/IconButton';
 import CartWidget from '../CartWidget/CartWidget';
-//import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
@@ -42,12 +40,11 @@ const NavBar = (props) => {
                 <Toolbar>
                     <Typography variant="h6">
                         <div className="container-logo">
-                            <img src={logo} alt={'logo'}/>
+                        <Link className="links" to="/"><img src={logo} alt={'logo'}/></Link>
                         </div>
                     </Typography>
                     <ul className="navbar-list">
                         <li><Link className="links" to="/"><Button color="inherit">Home</Button></Link></li>
-                        {/* <li><Link to="/producto"><Button color="inherit">Vinilos</Button></Link></li> */}
                         <li><Button
         id="basic-button"
         aria-controls="basic-menu"
