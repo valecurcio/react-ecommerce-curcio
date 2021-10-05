@@ -1,6 +1,6 @@
 export const mockProducts = [
     {
-        id: '1',
+        id: 1,
         title: 'Happier than Ever',
         img: 'happier-than-ever.jpg',
         category: 'Pop',
@@ -12,7 +12,7 @@ export const mockProducts = [
         stock: 100
     },
     {
-        id: '2',
+        id: 2,
         title: 'Abbey Road',
         img: 'abbey-road.jpg',
         category: 'Rock',
@@ -24,7 +24,7 @@ export const mockProducts = [
         stock: 150
     },
     {
-        id: '3',
+        id: 3,
         title: 'Queen II',
         img: 'queen-2.jpg',
         category: 'Rock',
@@ -36,7 +36,7 @@ export const mockProducts = [
         stock: 97
     },
     {
-        id: '4',
+        id: 4,
         title: 'Bitches Brew',
         img: 'bitches-brew.jpg',
         category: 'Jazz',
@@ -48,7 +48,7 @@ export const mockProducts = [
         stock: 130
     },
     {
-        id: '5',
+        id: 5,
         title: 'Never Mind the Bollocks',
         img: 'sex-pistols-never-mind.jpg',
         category: 'Rock',
@@ -60,7 +60,7 @@ export const mockProducts = [
         stock: 115
     },
     {
-        id: '6',
+        id: 6,
         title: 'Ella & Louis',
         img: 'ella-and-louis.jpg',
         category: 'Jazz',
@@ -72,7 +72,7 @@ export const mockProducts = [
         stock: 224
     },
     {
-        id: '7',
+        id: 7,
         title: 'Sour',
         img: 'olivia-rodrigo-sour.jpg',
         category: 'Pop',
@@ -85,7 +85,7 @@ export const mockProducts = [
     },
 
     {
-        id: '8',
+        id: 8,
         title: 'Pulse',
         img: 'pulse.png',
         category: 'Rock',
