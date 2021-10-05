@@ -4,7 +4,7 @@ import NavBar from '../components/NavBar/NavBar'
 import Home from '../pages/Home'
 import Contact from '../pages/Contact'
 import Error404 from '../pages/Error404'
-import ProductDetail from '../pages/ProductDetail'
+import ItemDetail from '../pages/ItemDetail'
 import FAQ from '../pages/FAQ'
 
 export default function AppRouter() {
@@ -28,7 +28,7 @@ export default function AppRouter() {
             <NavBar fixed={fixedScroll} />
                 <Switch>
                     <Route path="/contacto" component={Contact} />
-                    <Route path="/producto/:id" component={ProductDetail} />
+                    <Route path="/item/:id" component={ItemDetail} />
                     <Route path="/category/:categoryId" component={Home} />
                     <Route path="/faq" component={FAQ} />
                     <Route path="/" component={Home} />

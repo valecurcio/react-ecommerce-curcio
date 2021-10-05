@@ -4,10 +4,10 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen'
 import { useParams } from 'react-router'
 
 function ItemDetailContainer() {
-    const [infoProduct, setInfoProduct] = useState(null);
+    const [infoItem, setInfoItem] = useState(null);
     const [loader, setLoader] = useState(true);
     const { id } = useParams();
-    const mockProducts = [{
+    const mockItems = [{
         id: 1,
         title: 'Happier than Ever',
         img: 'happier-than-ever.jpg',
@@ -105,27 +105,27 @@ function ItemDetailContainer() {
         stock: 300
     }
 ]
-    const getProduct = (id) => {
-        const infoProduct = new Promise ((resolve, reject) => {
+    const getItem = (id) => {
+        const infoItem = new Promise ((resolve, reject) => {
         setTimeout(() => {
-            resolve(mockProducts.find(infoProduct => infoProduct.id === parseInt(id)))
+            resolve(mockItems.find(infoItem => infoItem.id === parseInt(id)))
         }, 2000)
         })
-        return infoProduct
+        return infoItem
     }
 
     
     useEffect(() => {
         setLoader(true);
-        getProduct(id).then((response) => {
-            setInfoProduct(response)
+        getItem(id).then((response) => {
+            setInfoItem(response)
         }).finally(() => setLoader(false))
     }, []);
 
     return (
         <div className="detail-container">
-         {loader ? (<LoadingScreen />) : infoProduct && <ItemDetail data={infoProduct} />}
-         {console.log("infoProduct: ", infoProduct)}
+         {loader ? (<LoadingScreen />) : infoItem && <ItemDetail data={infoItem} />}
+         {console.log("infoItem: ", infoItem)}
         </div>
     );
 }
