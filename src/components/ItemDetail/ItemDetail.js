@@ -13,7 +13,7 @@ function ItemDetail(props) {
         <div className="item-detail">
             {console.log("Data desde item detail: ", props.data)}
             <div className="img-container">
-                <img className="product-img" src={`../assets/products/${props.data.img}`} alt="album-cover"/>
+                <img className="item-img" src={`../assets/items/${props.data.img}`} alt="album-cover"/>
             </div> 
             <div className="info">
                 <h1 className="title">{props.data.title}</h1>

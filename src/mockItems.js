@@ -1,4 +1,4 @@
-export const mockProducts = [
+export const mockItems = [
     {
         id: 1,
         title: 'Happier than Ever',

@@ -1,4 +1,4 @@
-.container-product {
+.container-item {
     float: left;
     width: 19%;
     margin: 1rem;
@@ -10,11 +10,11 @@
     border-radius: 10px;
 }
 
-.container-product img {
+.container-item img {
     width: 100%;
 }
 
-.container-product > div {
+.container-item > div {
     width: 100%;
     justify-content: center;
 }
