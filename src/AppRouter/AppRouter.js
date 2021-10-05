@@ -28,9 +28,8 @@ export default function AppRouter() {
             <NavBar fixed={fixedScroll} />
                 <Switch>
                     <Route path="/contacto" component={Contact} />
+                    <Route path="/producto/:id" component={ProductDetail} />
                     <Route path="/category/:categoryId" component={Home} />
-                    <Route path="/producto" component={ProductDetail} />
-                    <Route path="/producto/:productId" component={ProductDetail} />
                     <Route path="/faq" component={FAQ} />
                     <Route path="/" component={Home} />
                     <Route path="*" component={Error404} />
