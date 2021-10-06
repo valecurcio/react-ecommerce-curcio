@@ -6,6 +6,7 @@ import Contact from '../pages/Contact'
 import Error404 from '../pages/Error404'
 import ItemDetail from '../pages/ItemDetail'
 import FAQ from '../pages/FAQ'
+import Cart from '../pages/Cart'
 
 export default function AppRouter() {
 
@@ -31,6 +32,7 @@ export default function AppRouter() {
                     <Route path="/item/:id" component={ItemDetail} />
                     <Route path="/category/:categoryId" component={Home} />
                     <Route path="/faq" component={FAQ} />
+                    <Route path="/cart" component={Cart} />
                     <Route path="/" component={Home} />
                     <Route path="*" component={Error404} />
                 </Switch>

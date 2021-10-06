@@ -1,38 +1,23 @@
 import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import './ItemCount.css';
+import { Link } from 'react-router-dom';
 
-export default function ItemCount() {
-    const [item, setItem] = useState(0);
-    const [stock, setStock] = useState(10);
+export default function ItemCount(props) {
     // const [size, setSize] = useState('');
     const [disableButton, setDisableButton] = useState(false);
-    const addItem = () => {
-        if(item < stock){
-            setItem(item + 1)
-        }else{
-            setDisableButton(true);
-        }
-    }
-    const removeItem = () => {
-        if(item > 0){
-            setItem(item - 1)
-        }else{
-            setItem(0)
-        }
-    }
+
     const addToCart = () => {
         console.log('agregar al carrito')
-        console.log(item)
     }
     return(
         <>
             <div className="counter">
-                <Button onClick={removeItem}>-</Button>
-                <h3>{item}</h3>
-                <Button onClick={addItem}>+</Button>
+                <Button onClick={props.onSubstract}>-</Button>
+                <h3>{props.quantity}</h3>
+                <Button onClick={props.onAdd}>+</Button>
             </div>
-            <Button disabled={disableButton} onClick={addToCart} id="addToCart" variant="contained">Comprar</Button>
+            <Button disabled={disableButton} onClick={addToCart} id="addToCart" variant="contained"><Link className="links" to={"/cart"}>Comprar</Link></Button>
         </>
     )
 }
