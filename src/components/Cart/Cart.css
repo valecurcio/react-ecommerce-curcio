@@ -1,0 +1,53 @@
+.item-container{
+display: flex;
+justify-content: center;
+}
+
+.desc-container{
+  margin-right: 20px;
+  text-align: left;
+}
+
+.img-container-cart{
+  flex-direction: column;
+  display: flex;
+}
+
+.img-fluid,.img-container-cart {
+  max-width: 150px;
+}
+
+#remove-item {
+  color: black;
+  margin-bottom: 20px;
+}
+
+.links {
+    text-decoration: none;
+    color: black;
+}
+  
+#remove {
+    background-color: rgb(231, 152, 146);
+    color: black;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#confirm {
+    margin-top: 15px;
+    color: black;
+    background-color: rgb(172, 221, 139);
+}
+
+#back {
+    margin-top: 15px;
+    color: black;
+    background-color: beige;
+}
+
+.list-items {
+  list-style: none;
+}
+

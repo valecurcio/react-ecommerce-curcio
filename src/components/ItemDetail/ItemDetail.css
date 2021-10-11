@@ -31,7 +31,7 @@
     font-size: 30px;
 }
 
-#back,#buy {
+#back,#buy, #success {
     margin-top: 15px;
     margin-left: 15px;
     color: black;

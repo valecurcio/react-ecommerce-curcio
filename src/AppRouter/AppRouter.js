@@ -1,12 +1,15 @@
 import React,{useState, useEffect} from 'react'
 import { BrowserRouter,Route, Switch } from 'react-router-dom'
 import NavBar from '../components/NavBar/NavBar'
+import CartProvider from '../context/CartContext'
+//Pages
 import Home from '../pages/Home'
 import Contact from '../pages/Contact'
 import Error404 from '../pages/Error404'
 import ItemDetail from '../pages/ItemDetail'
 import FAQ from '../pages/FAQ'
-import Cart from '../pages/Cart'
+import CartPage from '../pages/CartPage'
+
 
 export default function AppRouter() {
 
@@ -25,18 +28,20 @@ export default function AppRouter() {
 
     return (
             //Creo un wrapper BrowserRouter que contiene todos los Route
-            <BrowserRouter>
-            <NavBar fixed={fixedScroll} />
-                <Switch>
-                    <Route path="/contacto" component={Contact} />
-                    <Route path="/item/:id" component={ItemDetail} />
-                    <Route path="/category/:categoryId" component={Home} />
-                    <Route path="/faq" component={FAQ} />
-                    <Route path="/cart" component={Cart} />
-                    <Route path="/" component={Home} />
-                    <Route path="*" component={Error404} />
-                </Switch>
-                {/* Agregar Footer */}
-            </BrowserRouter>
+            <CartProvider>
+                <BrowserRouter>
+                    <NavBar fixed={fixedScroll} />
+                        <Switch>
+                            <Route path="/contacto" component={Contact} />
+                            <Route path="/item/:id" component={ItemDetail} />
+                            <Route path="/category/:categoryId" component={Home} />
+                            <Route path="/faq" component={FAQ} />
+                            <Route path="/cart" component={CartPage} />
+                            <Route path="/" component={Home} />
+                            <Route path="*" component={Error404} />
+                        </Switch>
+                        {/* Agregar Footer */}
+                </BrowserRouter>
+            </CartProvider>
     )
 }
