@@ -1,41 +1,39 @@
-import React, {useState} from 'react'
-import './ItemDetail.css'
+import React, {useState} from 'react';
+import './ItemDetail.css';
 import ItemCount from "../ItemCount/ItemCount";
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useValueContext } from '../../context/CartContext';
 
-function ItemDetail(props) {
+function ItemDetail({ item={} }) {
     const [buying, setBuying] = useState(false);
-    const [items, setItems] = useState(0);
-    const [stock, setStock] = useState(10);
-
-    const onAdd = () => {
+    const [quantity, setQuantity] = useState(0);
+    const { addItem } = useValueContext();
+    function add(data) {
         setBuying(true);
-        items < stock && setItems(items + 1)
-    }
-    const onSubstract = () => {
-        items !==0 && setItems(items - 1)
+        setQuantity(data);
+        addItem(item, data);
     }
 
     return (
         <div className="item-detail">
-            {console.log("Data desde item detail: ", props.data)}
+            {console.log("Data desde item detail: ", item)}
             <div className="img-container">
-                <img className="item-img" src={`../assets/items/${props.data.img}`} alt="album-cover"/>
+                <img className="item-img" src={`../assets/items/${item.img}`} alt="album-cover"/>
             </div> 
             <div className="info">
-                <h1 className="title">{props.data.title}</h1>
-                <p className="desc">{props.data.desc}</p>
-                <p className="desc">Artista: {props.data.artist}</p>
-                <p className="desc">Discográfica: {props.data.record}</p>
-                <p className="desc">Año: {props.data.year}</p>
-                <p className="price">AR ${props.data.price}</p>
-                
-                { !buying ? <ItemCount onAdd={onAdd} onSubstract={onSubstract} quantity={items}/> : 
+                <h1 className="title">{item.title}</h1>
+                <p className="desc">{item.desc}</p>
+                <p className="desc">Artista: {item.artist}</p>
+                <p className="desc">Discográfica: {item.record}</p>
+                <p className="desc">Año: {item.year}</p>
+                <p className="desc">Stock: {item.stock}</p>
+                <p className="price">AR ${item.price}</p>
+                { !buying ? <ItemCount stock={ item.stock } initial="0" onAdd={add} /> : 
                             <>
-                                <Link className="links" to={'/cart'}><Button id="buy" variant="contained">Finalizar compra</Button></Link>
+                                <Link className="links" to={'/cart'}><Button variant="contained" id="success">Finalizar compra</Button></Link>
                             </>}
-                <Button id="back" variant="contained"><Link className="links" to={"/"}>Volver</Link></Button>
+                            <Link className="links" to={"/home"}><Button id="back" variant="contained">Volver</Button></Link>
             </div>
         </div>
     )
