@@ -117,7 +117,6 @@ function ItemDetailContainer() {
         const infoItem = new Promise ((resolve, reject) => {
         setTimeout(() => {
             resolve(mockItems.find(o => o.id === Number(id)))
-            // resolve(mockItems.find(infoItem => infoItem.id === parseInt(id)))
         }, 3000)
         })
         return infoItem
@@ -126,7 +125,7 @@ function ItemDetailContainer() {
     return (
         <div className="detail-container">
          {loader ? (<LoadingScreen />) : infoItem && <ItemDetail item={infoItem} />}
-         {console.log("infoItem: ", infoItem)}
+         {/* {console.log("infoItem: ", infoItem)} */}
         </div>
     );
 }

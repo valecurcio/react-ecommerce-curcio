@@ -7,8 +7,9 @@ import { useValueContext } from '../../context/CartContext';
 //Functional Component
 function CartWidget() {
     const { quantityItems } = useValueContext();
+    let hidden = quantityItems > 0 ? { display: 'block' } : { display: 'none' };
     return(
-        <Link className="links" to="/cart">
+        <Link className="links" to="/cart" style={hidden}>
         <div className="cart-buttonNav">
             <Button variant="contained">
                 <ShoppingCartIcon />
