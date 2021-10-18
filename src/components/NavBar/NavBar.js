@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../assets/bsas-vinyl.png'
 import './NavBar.css';
 import { Link } from 'react-router-dom';
+import { getFirestore } from '../firebase/firebase';
 //external components
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,26 +16,28 @@ import Menu from '@mui/material/Menu';
 const NavBar = (props) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const db = getFirestore();
+    const categoryCollection = db.collection("categories");
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
       setAnchorEl(null);
     };
-    const [categories, setCategories] = useState([
-        {
-            name: 'Rock',
-            id: 'Rock'
-        },
-        {
-            name: 'Pop',
-            id: 'Pop'
-        },
-        {
-            name: 'Jazz',
-            id: 'Jazz'
+    useEffect(() => {
+      const db = getFirestore();
+      const categoryCollection = db.collection("categories");
+      categoryCollection.get().then((querySnapshot) => {
+        if(querySnapshot.size === 0) {
+          console.log('No hay resultados');
         }
-    ]);
+        setCategories(
+          querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+        )
+      });
+    }, []);
+    const [categories, setCategories] = useState([]);
+  
     return (
             <AppBar position={props.fixed ? 'fixed' : 'static'} className={`main-navbar ${props.fixed ? 'navbar-scroll' : ''}`}>
                 <Toolbar>
@@ -64,7 +67,7 @@ const NavBar = (props) => {
         }}
       >
         {categories.map( (category) => {
-                            return <MenuItem key={category.id} onClick={handleClose}><Link className="links" to={`/category/${category.id}`}>{category.name}</Link></MenuItem>
+                            return <MenuItem key={category.id} onClick={handleClose}><Link className="links" to={`${category.address}`}>{category.id}</Link></MenuItem>
                             
                         }
                         )}
