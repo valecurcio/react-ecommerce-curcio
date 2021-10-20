@@ -4,6 +4,7 @@ import NavBar from '../components/NavBar/NavBar'
 import CartProvider from '../context/CartContext'
 //Pages
 import Home from '../pages/Home'
+
 import Contact from '../pages/Contact'
 import Error404 from '../pages/Error404'
 import ItemDetail from '../pages/ItemDetail'
@@ -34,7 +35,7 @@ export default function AppRouter() {
                         <Switch>
                             <Route path="/contacto" component={Contact} />
                             <Route path="/item/:idItem" component={ItemDetail} />
-                            <Route path="/category/:idCategory" component={Home} />
+                            <Route path="/category/:categoryId" component={Home} />
                             <Route path="/faq" component={FAQ} />
                             <Route path="/cart" component={CartPage} />
                             <Route path="/" component={Home} />
