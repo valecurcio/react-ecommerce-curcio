@@ -7,13 +7,13 @@ const Item = (props) => {
     
     return(
         <>
-            <div className="container-item">
+            <div key={props.idItem} className="container-item">
                 <div>
                     <img src={`../assets/items/${props.img}`} alt="cover-vinyl"/>
                 </div>
                 <h3>{props.title}</h3>
                 <p>${props.price}</p>
-                <Link className="links" to={`/item/${props.id}`}><Button id="show" variant="contained">Ver</Button></Link>
+                <Link className="links" to={`/item/${props.idItem}`}><Button id="show" variant="contained">Ver</Button></Link>
             </div>
         </>
     )

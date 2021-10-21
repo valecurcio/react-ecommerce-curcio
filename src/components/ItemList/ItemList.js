@@ -41,7 +41,7 @@ function ItemList() {
         )
         })}
         {loader ? (<LoadingScreen />) : (items?.map((item) => (
-                <Item {...item} key={item.id} />)
+                <Item {...item} key={item.idItem} />)
             ))}
         </div>
     )

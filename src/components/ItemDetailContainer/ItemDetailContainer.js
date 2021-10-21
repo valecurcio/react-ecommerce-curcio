@@ -19,11 +19,11 @@ function ItemDetailContainer() {
   // }
 
     async function getItem(db) {
-      const docRef = doc(db, "items", idItem)
+      const docRef = doc(db, "items", idItem);
       const docSnap = await getDoc(docRef);
 
       if(docSnap.exists()) {
-        return docSnap.data();
+        return setItem ({id: docSnap.id, ...docSnap.data()});
       } else {
         console.log("No item with selected id")
       }
@@ -50,7 +50,7 @@ function ItemDetailContainer() {
 
     return (
         <div className="detail-container">
-         {loader ? (<LoadingScreen />) : item && <ItemDetail item={item} />}
+         {loader ? (<LoadingScreen />) : item && <ItemDetail item={item} key={idItem}/>}
          {/* {console.log("infoItem: ", infoItem)} */}
         </div>
     );
