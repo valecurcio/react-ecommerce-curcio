@@ -30,22 +30,9 @@ function ItemDetailContainer() {
     }
     
     useEffect(() => {
-      //setLoader(true);
-      //Old lines:
-      //const itemCollection = db.collection("items").doc(idItem);
-      // const itemFilter = itemCollection.where('id', '==', idItem);
-    //   const itemsCol = collection(db, 'items');
-    //   itemsCol.get().then((querySnapshot) => {
-    //     if(!querySnapshot.exists) {
-    //       console.log('No results');
-    //       setItem(null);
-    //     } else {
-    //       setItem({id: querySnapshot.id, ...querySnapshot.data()});
-    //     }
-    //     setLoader(false);
-    //   });
-    // }, [idItem]);
+      setLoader(true);
       getItem(db)
+      setLoader(false);
     },[idItem])
 
     return (

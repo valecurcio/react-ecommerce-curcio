@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useValueContext } from '../../context/CartContext';
 import { Button } from '@mui/material';
 import './Cart.css';
-//import DeleteIcon from '@material-ui/icons/Delete';
 import db from '../../firebase'
 import { getFirestore, collection, addDoc } from 'firebase/firestore'
 import Stepper from 'bs-stepper';
@@ -24,14 +23,14 @@ function useTextInput({ defaultValue, extras }) {
 }
 
 function Cart() {
-    const { cart, removeItem, clearCart } = useValueContext();
+    const { items, cart, removeItem, clearCart } = useValueContext();
     const [stepper, setStepper] = useState();
     const [buyer, setBuyer] = useState({});
     const [payment, setPayment] = useState({});
     const [finishOrder, setFinishOrder] = useState(false);
     const [orderId, setOrderId] = useState();
     let total = 0;
-    let newOrder = { buyer: {}, items: {}, total: 0, date: '', payment: {} };
+    let newOrder = { buyer: {}, items: {items}, total: 0, date: '', payment: {}, orderState: '' };
 
     // Formulario del comprador
     const nameInput = useTextInput({
@@ -79,22 +78,24 @@ function Cart() {
             setStepper(aux);
             aux.to(0);
         }
-    }, [cart]);
+    }, [cart, finishOrder]);
 
     async function createOrder() {
-        newOrder.items = cart.map((item) => ({ id: item.item.idItem, title: item.item.title, price: item.item.price, quantity: Number(item.quantity) }));
+        newOrder.items = cart.map((item) => ({ id: item.item.id, title: item.item.title, price: item.item.price, quantity: Number(item.quantity) }));
         newOrder.total = total;
         newOrder.payment = payment;
         newOrder.buyer = buyer;
-        newOrder.date = db.firestore.FieldValue.serverTimestamp();
+        //newOrder.date = db.firestore.FieldValue.serverTimestamp();
+        newOrder.orderState = 'generated';
 
         let orders = collection(db, 'orders');
-        const id = await addDoc(newOrder, orders);
+        const id = await addDoc(orders, newOrder);
         setOrderId(id.id);
         setFinishOrder(true);
         clearCart();
         next();
-        console.log(id.id);
+        console.log("Se generó la orden con id:", id.id);
+        console.log("Orden generada:", newOrder)
     }
 
     function next() {
@@ -114,11 +115,11 @@ function Cart() {
     function cartList() {
         return cart.map((item) => {
             function remove() {
-                removeItem(item.item.idItem);
+                removeItem(item.item.id);
             }
             total += Number(item.item.price)*Number(item.quantity);
             return <>
-                <li className="list-group-item" key={ item.item.idItem }>
+                <li className="list-group-item" key={ item.item.id }>
                     <div className="row">
                         <div className="col-md-3 text-left">
                             <img className="img-fluid" src={ item.item.img } alt=""/>
@@ -302,7 +303,7 @@ function Cart() {
             <>
             <div className="alert alert-success" role="alert">
                 Tu pedido se procesó con éxito. ¡Muchas gracias por tu compra!<br/>
-                <span className="font-weight-bold text-muted">ID de tu compra es:</span> { orderId }
+                <span className="font-weight-bold text-muted">El ID de tu compra es:</span> { orderId }
             </div>
             </>
         );

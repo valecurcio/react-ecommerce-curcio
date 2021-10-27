@@ -14,8 +14,14 @@ function ItemList() {
     async function getItems(db) {
         const itemsCol = collection(db, 'items');
         const itemsSnapshot = await getDocs(itemsCol);
-        const itemsList = itemsSnapshot.docs.map(doc => doc.data());
-        
+        const itemsList = itemsSnapshot.docs.map(doc => {
+            console.log(`doc`, doc, doc.id)
+            return {
+                id: doc.id,
+                ...doc.data()
+            }
+        });
+        console.log(`itemsList`, itemsList)
         return setItems(itemsList);
     }
     useEffect(() => {
