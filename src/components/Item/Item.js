@@ -7,7 +7,7 @@ const Item = (props) => {
     
     return(
         <>
-            <div className="container-item">
+            <div key={props.id} className="container-item">
                 <div>
                     <img src={`../assets/items/${props.img}`} alt="cover-vinyl"/>
                 </div>

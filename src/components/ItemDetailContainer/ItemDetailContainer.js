@@ -23,34 +23,21 @@ function ItemDetailContainer() {
       const docSnap = await getDoc(docRef);
 
       if(docSnap.exists()) {
-        return docSnap.data();
+        return setItem ({id: docSnap.id, ...docSnap.data()});
       } else {
         console.log("No item with selected id")
       }
     }
     
     useEffect(() => {
-      //setLoader(true);
-      //Old lines:
-      //const itemCollection = db.collection("items").doc(idItem);
-      // const itemFilter = itemCollection.where('id', '==', idItem);
-    //   const itemsCol = collection(db, 'items');
-    //   itemsCol.get().then((querySnapshot) => {
-    //     if(!querySnapshot.exists) {
-    //       console.log('No results');
-    //       setItem(null);
-    //     } else {
-    //       setItem({id: querySnapshot.id, ...querySnapshot.data()});
-    //     }
-    //     setLoader(false);
-    //   });
-    // }, [idItem]);
+      setLoader(true);
       getItem(db)
+      setLoader(false);
     },[idItem])
 
     return (
         <div className="detail-container">
-         {loader ? (<LoadingScreen />) : item && <ItemDetail item={item} />}
+         {loader ? (<LoadingScreen />) : item && <ItemDetail item={item} key={idItem}/>}
          {/* {console.log("infoItem: ", infoItem)} */}
         </div>
     );
