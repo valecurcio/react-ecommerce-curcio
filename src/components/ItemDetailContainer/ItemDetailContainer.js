@@ -19,7 +19,7 @@ function ItemDetailContainer() {
   // }
 
     async function getItem(db) {
-      const docRef = doc(db, "items", idItem)
+      const docRef = doc(db, "items", idItem);
       const docSnap = await getDoc(docRef);
 
       if(docSnap.exists()) {
