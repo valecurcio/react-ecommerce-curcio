@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { useValueContext } from '../../context/CartContext';
 import { Button } from '@mui/material';
 import './Cart.css';
-import { CartContext } from '../../context/CartContext';
-//import DeleteIcon from '@material-ui/icons/Delete';
 import db from '../../firebase'
 import { getFirestore, collection, addDoc } from 'firebase/firestore'
 import Stepper from 'bs-stepper';
