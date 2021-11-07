@@ -4,7 +4,7 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen'
 //import { mockItems } from "../../mockItems"
 import { NavLink, useParams } from 'react-router-dom'
 import db from '../../firebase'
-import {getFirestore, collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore'
 
 function ItemList() {
     const [items, setItems] = useState([]);

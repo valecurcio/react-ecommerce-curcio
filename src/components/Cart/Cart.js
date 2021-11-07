@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useValueContext } from '../../context/CartContext';
-import { Button } from '@mui/material';
+import { Card, CardContent, Grid, TextField, Button } from '@mui/material'
 import './Cart.css';
 import db from '../../firebase'
 import { getFirestore, collection, addDoc } from 'firebase/firestore'
 import Stepper from 'bs-stepper';
 import 'bs-stepper/dist/css/bs-stepper.min.css';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 function useTextInput({ defaultValue, extras }) {
     const [input, setInput] = useState(defaultValue);
-    
+
     function onChange(evt) {
         setInput(evt.target.value);
     }
@@ -30,7 +32,7 @@ function Cart() {
     const [finishOrder, setFinishOrder] = useState(false);
     const [orderId, setOrderId] = useState();
     let total = 0;
-    let newOrder = { buyer: {}, items: {items}, total: 0, date: '', payment: {}, orderState: '' };
+    let newOrder = { buyer: {}, items: { items }, total: 0, date: '', payment: {}, orderState: '' };
 
     // Formulario del comprador
     const nameInput = useTextInput({
@@ -73,7 +75,7 @@ function Cart() {
     });
 
     useEffect(() => {
-        if(cart.length !== 0 && !finishOrder) {
+        if (cart.length !== 0 && !finishOrder) {
             let aux = new Stepper(document.querySelector('.bs-stepper'));
             setStepper(aux);
             aux.to(0);
@@ -85,7 +87,6 @@ function Cart() {
         newOrder.total = total;
         newOrder.payment = payment;
         newOrder.buyer = buyer;
-        //newOrder.date = db.firestore.FieldValue.serverTimestamp();
         newOrder.orderState = 'generated';
 
         let orders = collection(db, 'orders');
@@ -117,23 +118,23 @@ function Cart() {
             function remove() {
                 removeItem(item.item.id);
             }
-            total += Number(item.item.price)*Number(item.quantity);
+            total += Number(item.item.price) * Number(item.quantity);
             return <>
-                <li className="list-group-item" key={ item.item.id }>
-                    <div className="row">
+                <li className="list-group-item" key={item.item.id}>
+                    <div className="row item-list-cart">
                         <div className="col-md-3 text-left">
-                            <img className="img-fluid" src={ item.item.img } alt=""/>
+                            <img className="img-fluid" src={`../assets/items/${item.item.img}`} alt="item-img" />
                         </div>
                         <div className="col-md-6">
-                            <h1 className="text-left">{ item.item.title }</h1>
-                            <p className="text-left">{ item.item.description }</p>
+                            <h2 className="text-left">{item.item.title}</h2>
+                            <p className="text-left">{item.item.description}</p>
                         </div>
                         <div className="col-md-3">
-                            <p className="text-left">Cantidad: { item.quantity }</p>
-                            <p className="text-left">Precio unidad: ${ item.item.price }</p>
-                            <p className="text-left">Total: ${ Number(item.item.price)*Number(item.quantity) }</p>
-                            <Button className="btn btn-danger" onClick={remove}>Eliminar</Button>
+                            <p className="text-left">Cantidad: {item.quantity}</p>
+                            <p className="text-left">Precio unidad: ${item.item.price}</p>
+                            <p className="text-left">Subtotal: ${Number(item.item.price) * Number(item.quantity)}</p>
                         </div>
+                        <Button className="remove-item" onClick={remove} id="remove-item"><DeleteIcon />Eliminar</Button>
                     </div>
                 </li>
             </>
@@ -143,15 +144,16 @@ function Cart() {
     function loadCart() {
         return (
             <>
-                <h1 style={{ marginTop:"20px" }}>Carrito</h1>
+                <h1 style={{ marginTop: "20px" }}>MI CARRITO</h1>
                 <ul className="list-group">
-                    { cartList() }
-                    <li className="list-group-item active text-right">Precio total ${ total }</li>
+                    {cartList()}
+                    <li style={{ marginTop: "10px" }} className="list-group-item active">Precio TOTAL ${total}</li>
                 </ul>
-                <br/>
+                <br />
                 <div className="row">
-                    <div className="col-md-3 offset-md-9 text-right">
-                        <Button onClick={next} className="btn btn-success align-self-end">Continuar compra</Button>
+                    <div className="col-md-3 offset-md-9">
+                        <Button onClick={clearCart} variant="contained" id="remove" style={{ float: "right" }} ><DeleteIcon />Vaciar carrito</Button>
+                        <Button onClick={next} className="cart-button" variant="contained" color="success" fullWidth>Continuar compra</Button>
                     </div>
                 </div>
             </>
@@ -159,161 +161,174 @@ function Cart() {
     }
 
     function loadPersonal() {
-        return(
+        return (
             <>
-                <h1 style={{ marginTop:"20px" }}>Datos personales</h1>
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="name">Nombre</label>
-                            <input type="text" className="form-control" id="name" { ...nameInput } />
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="lastname">Apellido</label>
-                            <input type="text" className="form-control" id="lastname" { ...lastInput } />
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="mail">Mail</label>
-                            <input type="text" className="form-control" id="mail" { ...mailInput } />
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="phone">Teléfono</label>
-                            <input type="text" className="form-control" id="phone" { ...phoneInput } />
-                        </div>
-                    </div>
-                </div>
-                <Button className="btn btn-primary" onClick={goToPayment}>Continuar</Button>
+                <Card style={{ maxWidth: 450, margin: "0 auto", padding: "10px 5px" }}>
+                    <CardContent>
+                        <h1 style={{ marginTop: "20px" }}>Datos personales</h1>
+
+                        <form>
+                            <Grid container spacing={1}>
+                                <Grid xs={12} item>
+                                    <label htmlFor="name">Nombre: </label>
+                                    <input type="text" className="form-control" id="name" {...nameInput} />
+                                </Grid>
+                                <Grid xs={12} item>
+                                    <label htmlFor="lastname">Apellido: </label>
+                                    <input type="text" className="form-control" id="lastname" {...lastInput} />
+                                </Grid>
+                                <Grid xs={12} item>
+                                    <label htmlFor="mail">Mail: </label>
+                                    <input type="text" className="form-control" id="mail" {...mailInput} fullWidth />
+                                </Grid>
+                                <Grid xs={12} item>
+                                    <label htmlFor="phone">Teléfono: </label>
+                                    <input type="text" className="form-control" id="phone" {...phoneInput} />
+
+                                </Grid>
+                                <Grid xs={12} item>
+                                    <Button className="cart-button" variant="contained" color="success" onClick={goToPayment} fullWidth >Continuar</Button>
+                                </Grid>
+                            </Grid>
+                        </form>
+                    </CardContent>
+                </Card>
             </>
         )
     }
 
     function loadPayment() {
-        return(
+        return (
             <>
-                <h1 style={{ marginTop:"20px" }}>Datos de pago</h1>
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="numTar">Número de tarjeta</label>
-                            <input type="text" className="form-control" id="numTar" { ...numTarInput } />
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="valHasta">Válida hasta</label>
-                            <input type="text" className="form-control" id="valHasta" { ...valHastaInput } />
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="nomApeTar">Nombre y Apellido impreso en la tarjeta</label>
-                            <input type="text" className="form-control" id="nomApeTar" { ...nomApeTarInput } />
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="form-group">
-                            <div className="form-group">
-                                <label htmlFor="docType">Tipo</label>
-                                <select className="form-control" id="docType" { ...docTypeInput }>
-                                    <option>DNI</option>
-                                    <option>LC</option>
-                                    <option>LE</option>
-                                </select>
+                <Card style={{ maxWidth: 450, margin: "0 auto", padding: "10px 5px" }}>
+                    <CardContent>
+                        <h1 style={{ marginTop: "20px" }}>Datos de pago</h1>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="numTar">Número de tarjeta: </label>
+                                    <input type="text" className="form-control" id="numTar" {...numTarInput} />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="valHasta">Válida hasta: </label>
+                                    <input type="text" className="form-control" id="valHasta" {...valHastaInput} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="form-group">
-                            <label htmlFor="docNum">Documento</label>
-                            <input type="text" className="form-control" id="docNum" { ...docNumInput } />
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="nomApeTar">Nombre y Apellido impreso en la tarjeta: </label>
+                                    <input type="text" className="form-control" id="nomApeTar" {...nomApeTarInput} />
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="form-group">
+                                    <div className="form-group">
+                                        <label htmlFor="docType">Tipo: </label>
+                                        <select className="form-control" id="docType" {...docTypeInput}>
+                                            <option>DNI</option>
+                                            <option>LC</option>
+                                            <option>LE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="form-group">
+                                    <label htmlFor="docNum">Nro. de Documento: </label>
+                                    <input type="text" className="form-control" id="docNum" {...docNumInput} />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <Button className="btn btn-primary" onClick={goToConfirm}>Continuar</Button>
+                        <Button className="cart-button" variant="contained" color="success" onClick={goToConfirm} fullWidth >Continuar</Button>
+                    </CardContent>
+                </Card>
+
             </>
         )
     }
 
     function loadConfirm() {
-        return(
+        return (
             <>
-                <h1 style={{ marginTop:"20px" }}>Confirmar compra</h1>
-                <br/>
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">Datos comprador</h5>
-                        <div className="row">
-                            <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Nombre:</span>: { buyer.name }</div>
-                            <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Apellido:</span> { buyer.last }</div>
-                            <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Telefono:</span> { buyer.phone }</div>
-                            <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Mail:</span> { buyer.email }</div>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">Datos tarjeta</h5>
-                        <div className="row">
-                            <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Número:</span> { payment.number }</div>
-                            <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Válido hasta:</span> { payment.validate }</div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Nombre:</span> { payment.name }</div>
-                            <div className="col-md-3 text-left"><span className="font-weight-bold text-muted">Tipo:</span> { payment.docType }</div>
-                            <div className="col-md-3 text-left"><span className="font-weight-bold text-muted">Documento:</span> { payment.docNum }</div>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">Productos</h5>
-                        {cart.map((item) => (
-                            <>
+                <Card style={{ maxWidth: 450, margin: "0 auto", padding: "10px 5px" }}>
+                    <CardContent>
+                        <h1 style={{ marginTop: "20px" }}>Confirmar compra</h1>
+                        <br />
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Datos comprador</h5>
                                 <div className="row">
-                                    <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Producto:</span> { item.item.title }</div>
-                                    <div className="col-md-6 text-right"><span className="font-weight-bold text-muted"><span className="font-weight-bold text-muted">Cantidad:</span> { item.quantity } - Precio unitario:</span> ${ item.item.price }</div>
+                                    <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Nombre</span>: {buyer.name}</div>
+                                    <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Apellido:</span> {buyer.last}</div>
+                                    <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Telefono:</span> {buyer.phone}</div>
+                                    <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Mail:</span> {buyer.email}</div>
                                 </div>
-                            </>
-                        ))}
-                        <div className="row">
-                            <div className="col-md-12 text-right"><span className="font-weight-bold text-muted">Total a pagar:</span> <span className="font-weight-bold">${ total }</span></div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <br/>
-                <Button className="btn btn-primary" onClick={createOrder}>Confirmar</Button>
+                        <br />
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Datos tarjeta</h5>
+                                <div className="row">
+                                    <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Número:</span> {payment.number}</div>
+                                    <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Válido hasta:</span> {payment.validate}</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Nombre:</span> {payment.name}</div>
+                                    <div className="col-md-3 text-left"><span className="font-weight-bold text-muted">Tipo:</span> {payment.docType}</div>
+                                    <div className="col-md-3 text-left"><span className="font-weight-bold text-muted">Documento:</span> {payment.docNum}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Productos</h5>
+                                {cart.map((item) => (
+                                    <>
+                                        <div className="row">
+                                            <div className="col-md-6 text-left"><span className="font-weight-bold text-muted">Producto:</span> {item.item.title}</div>
+                                            <div className="col-md-6 text-right"><span className="font-weight-bold text-muted"><span className="font-weight-bold text-muted">Cantidad:</span> {item.quantity} - Precio unitario:</span> ${item.item.price}</div>
+                                        </div>
+                                    </>
+                                ))}
+                                <div className="row">
+                                    <div className="col-md-12 text-right"><span className="font-weight-bold text-muted">TOTAL:</span> <span className="font-weight-bold">${total}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <Button className="cart-button" variant="contained" color="success" onClick={createOrder} fullWidth >Confirmar</Button>
+                    </CardContent>
+                </Card>
             </>
         )
     }
 
     function loadFinish() {
-        return(
+        return (
             <>
-            <div className="alert alert-success" role="alert">
-                Tu pedido se procesó con éxito. ¡Muchas gracias por tu compra!<br/>
-                <span className="font-weight-bold text-muted">El ID de tu compra es:</span> { orderId }
-            </div>
+                <div className="alert alert-success" role="alert">
+                    <p>Tu pedido se procesó con éxito.</p>
+                    <p>¡Muchas gracias por confiar en nosotros!</p>
+                    <span className="font-weight-bold text-muted">El ID de tu compra es: {orderId}</span>
+                    <br />
+                    <br />
+                    <Link className="cart-button" to="/home"><Button className="cart-button" variant="contained" color="success">Salir</Button></Link>
+                </div>
             </>
         );
     }
 
     return (
         <>
-            <div className="container" style={{ marginTop:"10px" }}>
-                { cart.length === 0 && !finishOrder ? <>
-                    <h2>No hay productos</h2> 
+            <div className="container" style={{ marginTop: "10px" }}>
+                {cart.length === 0 && !finishOrder ? <>
+                    <h2>No hay productos</h2>
                     <Link to={'/'}><Button className="btn btn-success">Home</Button></Link>
                 </> : <>
                     <div className="bs-stepper">
@@ -354,11 +369,11 @@ function Cart() {
                             </div>
                         </div>
                         <div className="bs-stepper-content">
-                            <div id="products-part" className="content" role="tabpanel" aria-labelledby="products-part-trigger">{ loadCart() }</div>
-                            <div id="personal-part" className="content" role="tabpanel" aria-labelledby="personal-part-trigger">{ loadPersonal() }</div>
-                            <div id="payment-part" className="content" role="tabpanel" aria-labelledby="payment-part-trigger">{ loadPayment() }</div>
-                            <div id="confirm-part" className="content" role="tabpanel" aria-labelledby="confirm-part-trigger">{ loadConfirm() }</div>
-                            <div id="finish-part" className="content" role="tabpanel" aria-labelledby="finish-part-trigger">{ loadFinish() }</div>
+                            <div id="products-part" className="content" role="tabpanel" aria-labelledby="products-part-trigger">{loadCart()}</div>
+                            <div id="personal-part" className="content" role="tabpanel" aria-labelledby="personal-part-trigger">{loadPersonal()}</div>
+                            <div id="payment-part" className="content" role="tabpanel" aria-labelledby="payment-part-trigger">{loadPayment()}</div>
+                            <div id="confirm-part" className="content" role="tabpanel" aria-labelledby="confirm-part-trigger">{loadConfirm()}</div>
+                            <div id="finish-part" className="content" role="tabpanel" aria-labelledby="finish-part-trigger">{loadFinish()}</div>
                         </div>
                     </div>
                 </>}

@@ -1,5 +1,5 @@
-import React,{useState, useEffect} from 'react'
-import { BrowserRouter,Route, Switch } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import NavBar from '../components/NavBar/NavBar'
 import CartProvider from '../context/CartContext'
 //Pages
@@ -14,13 +14,13 @@ import CartPage from '../pages/CartPage'
 
 export default function AppRouter() {
 
-    const[fixedScroll, setFixedScroll] = useState(false)
+    const [fixedScroll, setFixedScroll] = useState(false)
 
     useEffect(() => {
         function onScrollWindow() {
-            if(window.scrollY > 161){
+            if (window.scrollY > 161) {
                 setFixedScroll(true)
-            }else{
+            } else {
                 setFixedScroll(false)
             }
         }
@@ -28,21 +28,21 @@ export default function AppRouter() {
     }, [])
 
     return (
-            //Creo un wrapper BrowserRouter que contiene todos los Route
-            <CartProvider>
-                <BrowserRouter>
-                    <NavBar fixed={fixedScroll} />
-                        <Switch>
-                            <Route path="/contacto" component={Contact} />
-                            <Route path="/item/:idItem" component={ItemDetail} />
-                            <Route path="/category/:categoryId" component={Home} />
-                            <Route path="/faq" component={FAQ} />
-                            <Route path="/cart" component={CartPage} />
-                            <Route path="/" component={Home} />
-                            <Route path="*" component={Error404} />
-                        </Switch>
-                        {/* Agregar Footer */}
-                </BrowserRouter>
-            </CartProvider>
+        //Creo un wrapper BrowserRouter que contiene todos los Route
+        <CartProvider>
+            <BrowserRouter>
+                <NavBar fixed={fixedScroll} />
+                <Switch>
+                    <Route path="/contacto" component={Contact} />
+                    <Route path="/item/:idItem" component={ItemDetail} />
+                    <Route path="/category/:categoryId" component={Home} />
+                    <Route path="/faq" component={FAQ} />
+                    <Route path="/cart" component={CartPage} />
+                    <Route path="/" component={Home} />
+                    <Route path="*" component={Error404} />
+                </Switch>
+                {/* Agregar Footer */}
+            </BrowserRouter>
+        </CartProvider>
     )
 }
