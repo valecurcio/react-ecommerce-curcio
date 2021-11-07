@@ -1,0 +1,18 @@
+.faq-container{
+    max-width: 60rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
+    text-align: left;
+}
+
+.question {
+    background-color: beige !important;
+}
+
+@media screen and (max-width: 768px){
+    .faq-container{
+        max-width: 80rem;
+        margin-left: 5rem;
+        margin-right: 5rem;
+    }
+}
